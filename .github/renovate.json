@@ -1,0 +1,47 @@
+{
+  "extends": [
+    "config:best-practices",
+    ":disableRateLimiting"
+  ],
+  "automerge": false,
+  "automergeType": "pr",
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions", "pip_requirements"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchManagers": ["custom.regex", "ansible-galaxy"],
+      "automerge": false
+    }
+  ],
+  "enabledManagers": [
+    "github-actions",
+    "pip_requirements",
+    "custom.regex",
+    "ansible-galaxy"
+  ],
+  "ansible-galaxy": {
+    "managerFilePatterns": [
+      "/^requirements\\.ya?ml$/"
+    ]
+  },
+  "assignees": [
+    "pluggero"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^defaults/main\\.yml$/"
+      ],
+      "matchStrings": [
+        "satty_version:\\s+\"(?<currentValue>[\\d\\.]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "gabm/Satty",
+      "versioningTemplate": "semver"
+    }
+  ]
+}

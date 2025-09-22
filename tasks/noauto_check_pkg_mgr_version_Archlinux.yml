@@ -1,0 +1,29 @@
+---
+- name: Ensure we are using pacman
+  ansible.builtin.fail:
+    msg: "This role only supports {{ ansible_os_family }} systems that use pacman as a package manager."
+  when: ansible_pkg_mgr != "pacman"
+
+- name: Checks satty version in package manager
+  when: satty_distro_pkgs is defined and satty_distro_pkgs | length > 0
+  block:
+    - name: Update pacman cache
+      community.general.pacman:
+        update_cache: true
+      become: true
+
+    - name: Get satty version from package manager
+      ansible.builtin.command:
+        cmd: "pacman -Si {{ satty_distro_pkgs[0] }}"
+      changed_when: false
+      failed_when: false
+      ignore_errors: true
+      register: satty_pkg_mgr_version_cmd
+
+    - name: Extract only the version into a variable
+      ansible.builtin.set_fact:
+        satty_pkg_mgr_version: "{{ (satty_pkg_mgr_version_cmd.stdout | regex_search('Version.*?([\\d\\.]+)', '\\1', multiline=True))[0] }}"
+
+    - name: Debug satty version from package manager
+      ansible.builtin.debug:
+        var: satty_pkg_mgr_version

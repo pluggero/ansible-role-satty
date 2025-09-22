@@ -1,0 +1,50 @@
+[general]
+# Start Satty in fullscreen mode
+fullscreen = {{ satty_fullscreen | lower }}
+# Exit directly after copy/save action
+early-exit = {{ satty_early_exit | lower }}
+# Draw corners of rectangles round if the value is greater than 0 (0 disables rounded corners)
+corner-roundness = {{ satty_corner_roundness }}
+# Select the tool on startup [possible values: pointer, crop, line, arrow, rectangle, text, marker, blur, brush]
+initial-tool = "{{ satty_initial_tool }}"
+# Configure the command to be called on copy, for example `wl-copy`
+copy-command = "{{ satty_copy_command }}"
+# Increase or decrease the size of the annotations
+annotation-size-factor = {{ satty_annotation_size_factor }}
+# Filename to use for saving action. Omit to disable saving to file. Might contain format specifiers: https://docs.rs/chrono/latest/chrono/format/strftime/index.html
+output-filename = "{{ satty_output_filename }}"
+# After copying the screenshot, save it to a file as well
+save-after-copy = {{ satty_save_after_copy | lower }}
+# Hide toolbars by default
+default-hide-toolbars = {{ satty_default_hide_toolbars | lower }}
+# The primary highlighter to use, the other is accessible by holding CTRL at the start of a highlight [possible values: block, freehand]
+primary-highlighter = "{{ satty_primary_highlighter }}"
+# Disable notifications
+disable-notifications = {{ satty_disable_notifications | lower }}
+# Actions to trigger on right click (order is important)
+# [possible values: save-to-clipboard, save-to-file, exit]
+actions-on-right-click = {{ satty_actions_on_right_click | to_json }}
+# Actions to trigger on Enter key (order is important)
+# [possible values: save-to-clipboard, save-to-file, exit]
+actions-on-enter = {{ satty_actions_on_enter | to_json }}
+# Actions to trigger on Escape key (order is important)
+# [possible values: save-to-clipboard, save-to-file, exit]
+actions-on-escape = {{ satty_actions_on_escape | to_json }}
+# request no window decoration. Please note that the compositor has the final say in this. At this point. requires xdg-decoration-unstable-v1.
+no-window-decoration = {{ satty_no_window_decoration | lower }}
+# experimental feature: adjust history size for brush input smooting (0: disabled, default: 0, try e.g. 5 or 10)
+brush-smooth-history-size = {{ satty_brush_smooth_history_size }}
+
+# Font to use for text annotations
+[font]
+family = "{{ satty_font_family }}"
+style = "{{ satty_font_style }}"
+
+# Custom colours for the colour palette
+[color-palette]
+# These will be shown in the toolbar for quick selection
+palette = {{ satty_color_palette | to_json }}
+
+# These will be available in the color picker as presets
+# Leave empty to use GTK's default
+custom = {{ satty_color_custom | to_json }}

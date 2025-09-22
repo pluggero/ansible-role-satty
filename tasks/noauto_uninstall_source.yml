@@ -1,0 +1,14 @@
+---
+- name: Uninstall satty from source
+  block:
+    - name: Include rustup role
+      ansible.builtin.include_role:
+        name: "{{ satty_rustup_role }}"
+
+    - name: Uninstall satty
+      ansible.builtin.command:
+        cmd: "cargo uninstall satty"
+      environment:
+        PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
+      failed_when: false
+      changed_when: "'Removing' in satty_uninstall_cargo_cmd.stdout"

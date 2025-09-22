@@ -1,0 +1,54 @@
+---
+satty_config_dir: "{{ ansible_env.HOME }}/.config/satty"
+satty_config_file: "{{ satty_config_dir }}/config.toml"
+
+satty_version: "0.18.1"
+satty_install_method: "dynamic"
+satty_force_install: false
+
+satty_rustup_role: "pluggero.rustup"
+
+satty_archive_name: "satty-x86_64-unknown-linux-gnu.tar.gz"
+satty_download_url: "https://github.com/gabm/Satty/archive/refs/tags/v{{ satty_version }}.tar.gz"
+satty_download_dir: "/tmp"
+
+satty_install_dir: "/opt/"
+satty_install_path: "{{ satty_install_dir }}/satty-{{ satty_version }}"
+
+# =============================================================================
+# Satty Screenshot Configuration
+# =============================================================================
+#  [general] section
+satty_fullscreen: false
+satty_early_exit: true
+satty_corner_roundness: 0
+satty_initial_tool: "rectangle"
+satty_copy_command: "wl-copy"
+satty_annotation_size_factor: 0.5
+satty_output_filename: "/tmp/test-%Y-%m-%d_%H:%M:%S.png"
+satty_save_after_copy: false
+satty_default_hide_toolbars: false
+satty_primary_highlighter: "block"
+satty_disable_notifications: true
+satty_actions_on_right_click: []
+satty_actions_on_enter: ["save-to-clipboard"]
+satty_actions_on_escape: ["exit"]
+satty_no_window_decoration: false
+satty_brush_smooth_history_size: 10
+
+# [font] section
+satty_font_family: "Roboto"
+satty_font_style: "Bold"
+
+# [color-palette] section
+satty_color_palette:
+  - "#eb3434"
+  - "#1231e3"
+  - "#6515cf"
+  - "#ff1493"
+  - "#ffd700"
+  - "#008000"
+
+satty_color_custom:
+  - "#1e1e24"
+  - "#2b2a33"

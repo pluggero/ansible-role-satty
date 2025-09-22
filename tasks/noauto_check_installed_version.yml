@@ -1,0 +1,20 @@
+---
+- name: Check installed satty version
+  block:
+    - name: Get installed satty version
+      ansible.builtin.command:
+        cmd: "satty --version"
+      environment:
+        PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      register: satty_installed_version_cmd
+
+    - name: Extract only the version into a variable
+      ansible.builtin.set_fact:
+        satty_installed_version: "{{ satty_installed_version_cmd.stdout | regex_replace('^.*?([\\d\\.]{2,}).*$', '\\1') }}"
+
+    - name: Debug installed satty version
+      ansible.builtin.debug:
+        var: satty_installed_version

@@ -1,0 +1,58 @@
+---
+- name: Ensure satty is installed
+  block:
+    - name: Import installed satty version check
+      ansible.builtin.include_tasks: noauto_check_installed_version.yml
+      when: satty_installed_version is not defined
+
+    - name: Force install if the version numbers do not match
+      ansible.builtin.set_fact:
+        satty_force_install: true
+      when:
+        - satty_installed_version is defined
+        - satty_installed_version != satty_version
+
+    - name: Install satty from source
+      when: satty_installed_version is not defined or satty_force_install
+      block:
+        - name: Uninstall current satty installation
+          ansible.builtin.include_tasks: noauto_uninstall.yml
+          when: satty_installed_version is defined and satty_installed_version != ""
+
+        - name: Include rustup role
+          ansible.builtin.include_role:
+            name: "{{ satty_rustup_role }}"
+
+        - name: Download satty
+          ansible.builtin.get_url:
+            url: "{{ satty_download_url }}"
+            dest: "{{ satty_download_dir }}/satty-{{ satty_version }}.tar.gz"
+            mode: "0600"
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
+
+        - name: Extract archive
+          ansible.builtin.unarchive:
+            src: "{{ satty_download_dir }}/satty-{{ satty_version }}.tar.gz"
+            dest: "{{ satty_download_dir }}/"
+            remote_src: true
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
+            mode: "0755"
+
+        - name: Install satty
+          ansible.builtin.command:
+            cmd: "cargo install --path {{ satty_download_dir }}/Satty-{{ satty_version }}"
+          environment:
+            PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
+          changed_when: true
+
+        - name: Remove build directory
+          ansible.builtin.file:
+            path: "{{ satty_download_dir }}/Satty-{{ satty_version }}"
+            state: absent
+
+        - name: Remove archive
+          ansible.builtin.file:
+            path: "{{ satty_download_dir }}/satty-{{ satty_version }}.tar.gz"
+            state: absent

@@ -1,0 +1,13 @@
+---
+satty_dep_pkgs:
+  - glib2
+  - gtk4
+  - libadwaita
+  - gdk-pixbuf2
+  - libepoxy
+  - fontconfig
+  - slurp
+  - grim
+
+satty_distro_pkgs:
+  - satty

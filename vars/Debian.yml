@@ -1,0 +1,12 @@
+---
+satty_dep_pkgs:
+  - libglib2.0-dev
+  - libgtk-4-dev
+  - libadwaita-1-dev
+  - libgdk-pixbuf-2.0-dev
+  - libepoxy-dev
+  - libfontconfig1-dev
+  - slurp
+  - grim
+
+satty_distro_pkgs: []

@@ -1,0 +1,10 @@
+---
+- name: Ensure we are using apt
+  ansible.builtin.fail:
+    msg: "This role only supports {{ ansible_os_family }} systems that use apt as a package manager."
+  when: ansible_pkg_mgr != "apt"
+
+# On Debian-based systems, we have to install satty from source.
+- name: Install satty from source
+  ansible.builtin.include_tasks:
+    file: noauto_install_source.yml
