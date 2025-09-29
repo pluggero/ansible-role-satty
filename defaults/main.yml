@@ -20,7 +20,7 @@ satty_install_path: "{{ satty_install_dir }}/satty-{{ satty_version }}"
 # =============================================================================
 #  [general] section
 satty_fullscreen: false
-satty_early_exit: true
+satty_early_exit: false
 satty_corner_roundness: 0
 satty_initial_tool: "rectangle"
 satty_copy_command: "wl-copy"
