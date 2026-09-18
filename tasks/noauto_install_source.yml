@@ -42,7 +42,7 @@
 
         - name: Install satty
           ansible.builtin.command:
-            cmd: "cargo install --path {{ satty_download_dir }}/Satty-{{ satty_version }}"
+            cmd: "cargo install --locked --path {{ satty_download_dir }}/Satty-{{ satty_version }}"
           environment:
             PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
           changed_when: true
