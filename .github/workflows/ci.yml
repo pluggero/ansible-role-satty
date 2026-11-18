@@ -4,6 +4,7 @@ name: CI
   pull_request:
   schedule:
     - cron: "0 7 * * 5"
+  workflow_dispatch:
 
 concurrency:
   group: ansible-roles-ci
@@ -16,7 +17,7 @@ defaults:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Check out the codebase
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -36,14 +37,12 @@ jobs:
           yamllint .
 
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@b74fb6f73d234bf92672372cb1c10768e4018d16 # v26.11.0
-        with:
-          working_directory: "pluggero.satty"
-          requirements_file: "requirements.yml"
+        run: |
+          ansible-lint .
 
   molecule:
     name: Molecule
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: lint
     strategy:
       matrix:
@@ -74,7 +73,7 @@ jobs:
 
   status-check:
     name: Status Check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [lint, molecule]
     if: always()
     defaults:

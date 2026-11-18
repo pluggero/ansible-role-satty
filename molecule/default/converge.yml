@@ -15,4 +15,4 @@
       become: true
 
   roles:
-    - role: pluggero.satty
+    - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"
