@@ -9,13 +9,19 @@
     {
       "matchManagers": ["github-actions", "pip_requirements"],
       "automerge": true,
-      "automergeType": "pr"
+      "automergeType": "pr",
+      "minimumReleaseAge": "7 days"
     },
     {
       "matchManagers": ["custom.regex"],
       "matchDepNames": ["python/cpython"],
       "automerge": true,
-      "automergeType": "pr"
+      "automergeType": "pr",
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "matchDatasources": ["github-runners"],
+      "automerge": false
     },
     {
       "matchManagers": ["custom.regex", "ansible-galaxy"],
@@ -36,14 +42,22 @@
   "assignees": [
     "pluggero"
   ],
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "minimumReleaseAge": null,
+    "automerge": false,
+    "labels": ["security"]
+  },
   "customManagers": [
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^defaults/main\\.yml$/"
+        "/^defaults/main\\.yml$/",
+        "/^meta/argument_specs\\.yml$/"
       ],
       "matchStrings": [
-        "satty_version:\\s+\"(?<currentValue>[\\d\\.]+)\""
+        "satty_version:\\s+\"(?<currentValue>[\\d\\.]+)\"",
+        "satty_version:\\n(?:\\s+.*\\n)*?\\s+default:\\s+\"(?<currentValue>[\\d\\.]+)\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "gabm/Satty",

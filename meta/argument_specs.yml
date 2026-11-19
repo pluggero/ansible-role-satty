@@ -1,0 +1,209 @@
+---
+argument_specs:
+  main:
+    short_description: Install and configure Satty
+    description: >-
+      Installs a basic configuration of Satty, a screenshot annotation tool,
+      on various Linux distributions.
+    options:
+      # =========================================================================
+      # Role / install configuration
+      # =========================================================================
+      satty_config_dir:
+        description: Directory where the Satty configuration file is stored.
+        type: path
+        default: "{{ ansible_env.HOME }}/.config/satty"
+      satty_config_file:
+        description: Path to the rendered Satty configuration file.
+        type: path
+        default: "{{ satty_config_dir }}/config.toml"
+      satty_version:
+        description: >-
+          Version of Satty to install, used to build the download URL and to
+          compare against the installed and package manager versions.
+        type: str
+        default: "0.20.0"
+      satty_install_method:
+        description: >-
+          Method used to install Satty. "source" installs Satty from source.
+          "package" installs Satty from the distribution's package manager
+          (note: this installs the latest version available in the package
+          manager, not the version defined in satty_version). "dynamic"
+          installs from the package manager if it provides the correct
+          version, otherwise falls back to installing from source.
+        type: str
+        default: "dynamic"
+        choices:
+          - package
+          - source
+          - dynamic
+      satty_force_install:
+        description: Force reinstallation even if Satty is already installed in the required version.
+        type: bool
+        default: false
+      satty_rustup_role:
+        description: Name of the rustup role to include when installing Satty from source.
+        type: str
+        default: "pluggero.rustup"
+      satty_archive_name:
+        description: Name of the release archive to download when installing Satty from source.
+        type: str
+        default: "satty-x86_64-unknown-linux-gnu.tar.gz"
+      satty_download_url:
+        description: URL used to download the Satty source archive.
+        type: str
+        default: "https://github.com/gabm/Satty/archive/refs/tags/v{{ satty_version }}.tar.gz"
+      satty_download_dir:
+        description: Directory used to download and extract the Satty source archive.
+        type: path
+        default: "/tmp"
+      satty_install_dir:
+        description: Directory where Satty is installed when built from source.
+        type: path
+        default: "/opt/"
+      satty_install_path:
+        description: Full installation path of Satty when built from source.
+        type: path
+        default: "{{ satty_install_dir }}/satty-{{ satty_version }}"
+
+      # =========================================================================
+      # Satty screenshot configuration - [general] section
+      # =========================================================================
+      satty_fullscreen:
+        description: Start Satty in fullscreen mode.
+        type: bool
+        default: false
+      satty_early_exit:
+        description: Exit directly after a copy or save action.
+        type: bool
+        default: false
+      satty_corner_roundness:
+        description: Draw corners of rectangles round if the value is greater than 0 (0 disables rounded corners).
+        type: int
+        default: 0
+      satty_initial_tool:
+        description: Tool selected when Satty starts.
+        type: str
+        default: "rectangle"
+        choices:
+          - pointer
+          - crop
+          - line
+          - arrow
+          - rectangle
+          - text
+          - marker
+          - blur
+          - brush
+      satty_copy_command:
+        description: Command used for clipboard operations.
+        type: str
+        default: "wl-copy"
+      satty_annotation_size_factor:
+        description: Increase or decrease the size of the annotations.
+        type: float
+        default: 0.5
+      satty_output_filename:
+        description: >-
+          Filename pattern used for the save action. May contain strftime
+          format specifiers.
+        type: str
+        default: "/tmp/test-%Y-%m-%d_%H:%M:%S.png"
+      satty_save_after_copy:
+        description: Also save the screenshot to a file after copying it.
+        type: bool
+        default: false
+      satty_default_hide_toolbars:
+        description: Hide the toolbars by default.
+        type: bool
+        default: false
+      satty_primary_highlighter:
+        description: >-
+          Primary highlighter to use; the other is accessible by holding
+          CTRL at the start of a highlight.
+        type: str
+        default: "block"
+        choices:
+          - block
+          - freehand
+      satty_disable_notifications:
+        description: Disable desktop notifications.
+        type: bool
+        default: true
+      satty_actions_on_right_click:
+        description: Actions to trigger on right click, in order.
+        type: list
+        elements: str
+        default: []
+        choices:
+          - save-to-clipboard
+          - save-to-file
+          - exit
+      satty_actions_on_enter:
+        description: Actions to trigger on the Enter key, in order.
+        type: list
+        elements: str
+        default:
+          - save-to-clipboard
+        choices:
+          - save-to-clipboard
+          - save-to-file
+          - exit
+      satty_actions_on_escape:
+        description: Actions to trigger on the Escape key, in order.
+        type: list
+        elements: str
+        default:
+          - exit
+        choices:
+          - save-to-clipboard
+          - save-to-file
+          - exit
+      satty_no_window_decoration:
+        description: >-
+          Request no window decoration. The compositor has the final say in
+          this; requires xdg-decoration-unstable-v1.
+        type: bool
+        default: false
+      satty_brush_smooth_history_size:
+        description: >-
+          Experimental feature: history size for brush input smoothing (0
+          disables it).
+        type: int
+        default: 10
+
+      # =========================================================================
+      # Satty screenshot configuration - [font] section
+      # =========================================================================
+      satty_font_family:
+        description: Font family used for text annotations.
+        type: str
+        default: "Roboto"
+      satty_font_style:
+        description: Font style used for text annotations.
+        type: str
+        default: "Bold"
+
+      # =========================================================================
+      # Satty screenshot configuration - [color-palette] section
+      # =========================================================================
+      satty_color_palette:
+        description: Colors shown in the toolbar for quick selection.
+        type: list
+        elements: str
+        default:
+          - "#eb3434"
+          - "#1231e3"
+          - "#6515cf"
+          - "#ff1493"
+          - "#ffd700"
+          - "#008000"
+      satty_color_custom:
+        description: >-
+          Additional colors available as presets in the color picker; leave
+          empty to use GTK's defaults.
+        type: list
+        elements: str
+        default:
+          - "#1e1e24"
+          - "#2b2a33"
