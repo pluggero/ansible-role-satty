@@ -18,3 +18,15 @@
       ansible.builtin.assert:
         that:
           - "satty_installed_version == satty_version"
+
+    - name: Gather installed packages
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Assert only build packages installed by the role were removed
+      ansible.builtin.assert:
+        that:
+          - "'libepoxy-dev' in ansible_facts.packages"
+          - "'libgtk-4-dev' not in ansible_facts.packages"
+          - "'libadwaita-1-dev' not in ansible_facts.packages"
+      when: ansible_os_family == 'Debian'

@@ -9,5 +9,7 @@ satty_dep_pkgs:
   - slurp
   - grim
 
+satty_build_pkgs: []
+
 satty_distro_pkgs:
   - satty

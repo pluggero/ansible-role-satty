@@ -14,5 +14,12 @@
       when: ansible_os_family == 'Debian'
       become: true
 
+    - name: Pre-install a build package that must be kept
+      ansible.builtin.apt:
+        name: libepoxy-dev
+        state: present
+      when: ansible_os_family == 'Debian'
+      become: true
+
   roles:
     - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"

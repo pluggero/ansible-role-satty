@@ -5,6 +5,7 @@ satty_config_file: "{{ satty_config_dir }}/config.toml"
 satty_version: "0.22.0"
 satty_install_method: "dynamic"
 satty_force_install: false
+satty_remove_build_pkgs: true
 
 satty_rustup_role: "pluggero.rustup"
 
