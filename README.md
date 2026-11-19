@@ -43,6 +43,12 @@ satty_force_install: false
 Force reinstallation even if satty is already installed.
 
 ```yaml
+satty_remove_build_pkgs: true
+```
+
+Remove build packages after a source install. Only packages installed by this role are removed.
+
+```yaml
 satty_config_dir: "{{ ansible_env.HOME }}/.config/satty"
 ```
 

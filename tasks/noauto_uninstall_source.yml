@@ -10,5 +10,6 @@
         cmd: "cargo uninstall satty"
       environment:
         PATH: "{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
+      register: satty_uninstall_cargo_cmd
       failed_when: false
       changed_when: "'Removing' in satty_uninstall_cargo_cmd.stdout"

@@ -16,7 +16,7 @@
       community.general.pacman:
         name: "{{ package }}"
         state: absent
-      loop: "{{ satty_build_pkgs }}"
+      loop: "{{ satty_build_pkgs_to_remove }}"
       loop_control:
         loop_var: package
       become: true
