@@ -73,6 +73,12 @@ satty_output_filename: "/tmp/test-%Y-%m-%d_%H:%M:%S.png"
 Filename pattern for saved screenshots.
 
 ```yaml
+satty_corner_radius: 0
+```
+
+Corner radius in px (0 disables rounded corners).
+
+```yaml
 satty_actions_on_enter: ["save-to-clipboard"]
 satty_actions_on_escape: ["exit"]
 ```

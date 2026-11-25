@@ -3,9 +3,7 @@
 fullscreen = {{ satty_fullscreen | lower }}
 # Exit directly after copy/save action
 early-exit = {{ satty_early_exit | lower }}
-# Draw corners of rectangles round if the value is greater than 0 (0 disables rounded corners)
-corner-roundness = {{ satty_corner_roundness }}
-# Select the tool on startup [possible values: pointer, crop, line, arrow, rectangle, text, marker, blur, brush]
+# Select the tool on startup [possible values: see `satty --help`]
 initial-tool = "{{ satty_initial_tool }}"
 # Configure the command to be called on copy, for example `wl-copy`
 copy-command = "{{ satty_copy_command }}"
@@ -17,23 +15,25 @@ output-filename = "{{ satty_output_filename }}"
 save-after-copy = {{ satty_save_after_copy | lower }}
 # Hide toolbars by default
 default-hide-toolbars = {{ satty_default_hide_toolbars | lower }}
-# The primary highlighter to use, the other is accessible by holding CTRL at the start of a highlight [possible values: block, freehand]
-primary-highlighter = "{{ satty_primary_highlighter }}"
 # Disable notifications
 disable-notifications = {{ satty_disable_notifications | lower }}
 # Actions to trigger on right click (order is important)
-# [possible values: save-to-clipboard, save-to-file, exit]
+# [possible values: save-to-clipboard, save-to-file, save-to-file-as, copy-filepath-to-clipboard, exit]
 actions-on-right-click = {{ satty_actions_on_right_click | to_json }}
 # Actions to trigger on Enter key (order is important)
-# [possible values: save-to-clipboard, save-to-file, exit]
+# [possible values: save-to-clipboard, save-to-file, save-to-file-as, copy-filepath-to-clipboard, exit]
 actions-on-enter = {{ satty_actions_on_enter | to_json }}
 # Actions to trigger on Escape key (order is important)
-# [possible values: save-to-clipboard, save-to-file, exit]
+# [possible values: save-to-clipboard, save-to-file, save-to-file-as, copy-filepath-to-clipboard, exit]
 actions-on-escape = {{ satty_actions_on_escape | to_json }}
 # request no window decoration. Please note that the compositor has the final say in this. At this point. requires xdg-decoration-unstable-v1.
 no-window-decoration = {{ satty_no_window_decoration | lower }}
 # experimental feature: adjust history size for brush input smooting (0: disabled, default: 0, try e.g. 5 or 10)
 brush-smooth-history-size = {{ satty_brush_smooth_history_size }}
+
+[style]
+# Corner radius in px (0 disables rounded corners)
+corner-radius = {{ satty_corner_radius }}
 
 # Font to use for text annotations
 [font]
