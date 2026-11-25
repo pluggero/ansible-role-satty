@@ -22,7 +22,7 @@ argument_specs:
           Version of Satty to install, used to build the download URL and to
           compare against the installed and package manager versions.
         type: str
-        default: "0.22.0"
+        default: "0.23.0"
       satty_install_method:
         description: >-
           Method used to install Satty. "source" installs Satty from source.
