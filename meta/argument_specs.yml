@@ -77,10 +77,6 @@ argument_specs:
         description: Exit directly after a copy or save action.
         type: bool
         default: false
-      satty_corner_roundness:
-        description: Draw corners of rectangles round if the value is greater than 0 (0 disables rounded corners).
-        type: int
-        default: 0
       satty_initial_tool:
         description: Tool selected when Satty starts.
         type: str
@@ -95,6 +91,17 @@ argument_specs:
           - marker
           - blur
           - brush
+          - pen
+          - highlighter
+          - ellipse
+          - highlight
+          - spotlight
+          - lensblur
+          - blackout
+          - pixelate
+          - fringe-pixelate
+          - fringe
+          - image
       satty_copy_command:
         description: Command used for clipboard operations.
         type: str
@@ -117,15 +124,6 @@ argument_specs:
         description: Hide the toolbars by default.
         type: bool
         default: false
-      satty_primary_highlighter:
-        description: >-
-          Primary highlighter to use; the other is accessible by holding
-          CTRL at the start of a highlight.
-        type: str
-        default: "block"
-        choices:
-          - block
-          - freehand
       satty_disable_notifications:
         description: Disable desktop notifications.
         type: bool
@@ -138,6 +136,8 @@ argument_specs:
         choices:
           - save-to-clipboard
           - save-to-file
+          - save-to-file-as
+          - copy-filepath-to-clipboard
           - exit
       satty_actions_on_enter:
         description: Actions to trigger on the Enter key, in order.
@@ -148,6 +148,8 @@ argument_specs:
         choices:
           - save-to-clipboard
           - save-to-file
+          - save-to-file-as
+          - copy-filepath-to-clipboard
           - exit
       satty_actions_on_escape:
         description: Actions to trigger on the Escape key, in order.
@@ -158,6 +160,8 @@ argument_specs:
         choices:
           - save-to-clipboard
           - save-to-file
+          - save-to-file-as
+          - copy-filepath-to-clipboard
           - exit
       satty_no_window_decoration:
         description: >-
@@ -171,6 +175,14 @@ argument_specs:
           disables it).
         type: int
         default: 10
+
+      # =========================================================================
+      # Satty screenshot configuration - [style] section
+      # =========================================================================
+      satty_corner_radius:
+        description: Corner radius in px (0 disables rounded corners).
+        type: int
+        default: 0
 
       # =========================================================================
       # Satty screenshot configuration - [font] section
